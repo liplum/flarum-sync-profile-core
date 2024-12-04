@@ -1,5 +1,5 @@
 {
-    "name": "askvortsov/flarum-auth-sync",
+    "name": "liplum/flarum-sync-profile",
     "description": "Manage Sync from External Identity Providers",
     "keywords": [
         "flarum"
@@ -7,32 +7,33 @@
     "type": "flarum-extension",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/askvortsov1/flarum-auth-sync/issues",
-        "source": "https://github.com/askvortsov1/flarum-auth-sync",
-        "forum": "https://discuss.flarum.org/d/22759-flarum-auth-sync"
+        "issues": "https://github.com/askvortsov1/flarum-sync-profile/issues",
+        "source": "https://github.com/askvortsov1/flarum-sync-profile",
+        "forum": "https://discuss.flarum.org/d/22759-flarum-sync-profile"
     },
     "require": {
         "flarum/core": "^1.2"
     },
     "authors": [
         {
-            "name": "Alexander Skvortsov",
-            "email": "askvortsov@yflarum.org",
+            "name": "Liplum",
+            "homepage": "https://liplum.net/",
+            "email": "Li_plum@outlook.com",
             "role": "Developer"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Askvortsov\\FlarumAuthSync\\": "src/"
+            "Liplum\\SyncProfile\\": "src/"
         }
     },
     "extra": {
         "flarum-extension": {
-            "title": "Flarum Auth Sync",
+            "title": "Sync Profile",
             "category": "authentication",
             "icon": {
                 "name": "fas fa-sync",
-                "backgroundColor": "#6932D1",
+                "backgroundColor": "#b4333f",
                 "color": "#fff"
             }
         }

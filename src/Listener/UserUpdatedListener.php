@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of askvortsov/flarum-auth-sync
+ * This file is part of liplum/flarum-sync-profile
  *
  *  Copyright (c) 2020 Alexander Skvortsov.
  *
@@ -9,9 +9,9 @@
  *  LICENSE file that was distributed with this source code.
  */
 
-namespace Askvortsov\FlarumAuthSync\Listener;
+namespace Liplum\SyncProfile\Listener;
 
-use Askvortsov\FlarumAuthSync\Models\AuthSyncEvent;
+use Liplum\SyncProfile\Models\AuthSyncEvent;
 use Flarum\Api\Event\Serializing;
 use Flarum\Extension\ExtensionManager;
 use Flarum\Group\Group;
@@ -75,12 +75,12 @@ class UserUpdatedListener
         foreach ($events as $event) {
             $attributes = json_decode($event->attributes, true);
             // If Avatar present and avatar sync enabled
-            if (isset($attributes['avatar']) && $this->settings->get('askvortsov-auth-sync.sync_avatar', false) && !fnmatch($this->settings->get('askvortsov-auth-sync.ignored_avatar', ''), $attributes['avatar'])) {
+            if (isset($attributes['avatar']) && $this->settings->get('liplum-sync-profile.sync_avatar', false) && !fnmatch($this->settings->get('liplum-sync-profile.ignored_avatar', ''), $attributes['avatar'])) {
                 $image = (new ImageManager())->make($attributes['avatar']);
                 $this->avatarUploader->upload($user, $image);
             }
             // If group present and group sync enabled
-            if (isset($attributes['groups']) && $this->settings->get('askvortsov-auth-sync.sync_groups', false)) {
+            if (isset($attributes['groups']) && $this->settings->get('liplum-sync-profile.sync_groups', false)) {
                 $newGroupIds = [];
                 foreach ($attributes['groups'] as $group) {
                     if (filter_var($group, FILTER_VALIDATE_INT) && Group::where('id', intval($group))->exists()) {
@@ -97,13 +97,13 @@ class UserUpdatedListener
                 });
             }
             // If bio present and bio sync enabled
-            if (isset($attributes['bio']) && $this->settings->get('askvortsov-auth-sync.sync_bio', false)) {
+            if (isset($attributes['bio']) && $this->settings->get('liplum-sync-profile.sync_bio', false)) {
                 if ($this->extensions->isEnabled('fof-user-bio') && is_string($attributes['bio'])) {
                     $user->bio = $attributes['bio'];
                 }
             }
             // If masquerade present and masquerade sync enabled
-            if (isset($attributes['masquerade_attributes']) && $this->settings->get('askvortsov-auth-sync.sync_masquerade', false)) {
+            if (isset($attributes['masquerade_attributes']) && $this->settings->get('liplum-sync-profile.sync_masquerade', false)) {
                 if ($this->extensions->isEnabled('fof-masquerade') && is_array($attributes['masquerade_attributes'])) {
                     $controller = UserConfigureController::class;
                     if (is_string($controller)) {

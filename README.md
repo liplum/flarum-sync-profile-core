@@ -14,13 +14,13 @@ Some authentication protocols, such as SAML2, LDAP, OpenID Connect, etc have the
 Installation the extension:
 
 ```sh
-composer require askvortsov/flarum-auth-sync
+composer require liplum/flarum-sync-profile
 ```
 
 Update the extension:
 
 ```sh
-composer update askvortsov/flarum-auth-sync
+composer update liplum/flarum-sync-profile
 ```
 
 ## How to Use
@@ -29,14 +29,14 @@ For flarum administrators, if you're using an authentication extension that uses
 
 To use this extension in another authentication extension:
 
-- Import the AuthEventSync model via `use Askvortsov\FlarumAuthSync\Models\AuthSyncEvent;`
+- Import the AuthEventSync model via `use Liplum\SyncProfile\Models\AuthSyncEvent;`
 - Before logging in/registering the user, create an AuthSyncEvent. Ex:
 
 ```php
-use Askvortsov\FlarumAuthSync\Models\AuthSyncEvent;
+use Liplum\SyncProfile\Models\AuthSyncEvent;
 use Carbon\Carbon;
 
-if ($this->extensions->isEnabled('askvortsov-auth-sync') && $this->settings->get('askvortsov-saml.sync_attributes', '')) {
+if ($this->extensions->isEnabled('liplum-sync-profile') && $this->settings->get('liplum-saml.sync_attributes', '')) {
     $event = new AuthSyncEvent();
     $event->email="example.user@example.com";
     $event->attributes = json_encode([

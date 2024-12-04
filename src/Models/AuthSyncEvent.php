@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of askvortsov/flarum-auth-sync
+ * This file is part of liplum/flarum-sync-profile
  *
  *  Copyright (c) 2020 Alexander Skvortsov.
  *
@@ -9,7 +9,7 @@
  *  LICENSE file that was distributed with this source code.
  */
 
-namespace Askvortsov\FlarumAuthSync\Models;
+namespace Liplum\SyncProfile\Models;
 
 use Carbon\Carbon;
 use Flarum\Database\AbstractModel;
