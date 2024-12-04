@@ -61,8 +61,6 @@ if ($this->extensions->isEnabled('liplum-sync-profile') && $this->settings->get(
   - `bio`: A string that will be synced to the user's bio if [Friends of Flarum User Bios](https://github.com/FriendsOfFlarum/user-bio) is enabled
   - `masquerade_attributes`: An associative array for any masquerade keys and attributes you want to sync. Make sure that the key matches the name of the profile field exactly.
 
-This was originally developed for [Flarum SAML2 SSO](https://github.com/askvortsov1/flarum-saml). For an example of how to integrate it, please see [this line](https://github.com/askvortsov1/flarum-saml/blob/d3837acc54eb432366da067f4bdecf31d0a6ff42/src/Controllers/ACSController.php#L60).
-
 ### TODO
 
 - Add better validation and error handling.
