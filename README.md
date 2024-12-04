@@ -1,4 +1,4 @@
-# Flarum Auth Sync
+# Flarum Sync Profile
 
 A [Flarum](http://flarum.org) extension to sync user attributes when authenticated by an external identity provider. This extension provides support for syncing:
 
