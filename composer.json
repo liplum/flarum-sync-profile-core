@@ -3,7 +3,9 @@
   "description": "Manage Sync from External Identity Providers",
   "version": "0.1",
   "keywords": [
-    "flarum"
+    "flarum",
+    "flarum-extension",
+    "flarum-ext"
   ],
   "type": "flarum-extension",
   "license": "MIT",
