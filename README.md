@@ -25,7 +25,7 @@ composer update liplum/flarum-sync-profile
 
 ## How to Use
 
-For flarum administrators, if you're using an authentication extension that uses flarum auth sync, you can use the settings popup on the Flarum Admin extensions page to choose which types of attributes you'd like to sync. Please note that in order to sync Bios and Masquerade Profile Fields, you need to install and enable the [Friends of Flarum User Bios](https://github.com/FriendsOfFlarum/user-bio) and [Friends of Flarum Masquerade](https://github.com/FriendsOfFlarum/masquerade) extensions.
+For flarum administrators, if you're using an authentication extension that uses this extension, you can use the settings popup on the Flarum Admin extensions page to choose which types of attributes you'd like to sync. Please note that in order to sync Bios and Masquerade Profile Fields, you need to install and enable the [Friends of Flarum User Bios](https://github.com/FriendsOfFlarum/user-bio) and [Friends of Flarum Masquerade](https://github.com/FriendsOfFlarum/masquerade) extensions.
 
 To use this extension in another authentication extension:
 
@@ -70,3 +70,7 @@ This was originally developed for [Flarum SAML2 SSO](https://github.com/askvorts
 - Add an expiry setting for Auth Sync Events.
 - Add support for getting users via LoginProvider providers and identifiers, in addition to email.
 - Due to a bug in flarum core, the `LoggedIn` event isn't dispatched when logging in via an external identity provider. Until this is fixed, the UserUpdatedListener listens to `Serialize` events (except those going to masquerade). This workaround will be promptly removed when the upstream bug is fixed.
+
+## Acknowledgement
+
+Thanks to <https://github.com/askvortsov1/flarum-auth-sync> with `MIT License`.

@@ -1,6 +1,6 @@
 liplum-sync-profile:
   admin:
-    title: Auth Sync Configuration
+    title: Sync Profile Configuration
     labels:
       ignored_avatar: If a returned avatar is equal to this, it will not be set from auth. This can be used to ignore default avatar values.
       stop_avatar_change: Block users from changing their avatar from flarum?
