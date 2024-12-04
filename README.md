@@ -1,7 +1,5 @@
 # Flarum Auth Sync
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/askvortsov/flarum-auth-sync.svg)](https://packagist.org/packages/askvortsov/flarum-auth-sync)
-
 A [Flarum](http://flarum.org) extension to sync user attributes when authenticated by an external identity provider. This extension provides support for syncing:
 
 - Avatar
@@ -11,21 +9,21 @@ A [Flarum](http://flarum.org) extension to sync user attributes when authenticat
 
 Some authentication protocols, such as SAML2, LDAP, OpenID Connect, etc have the ability to send attributes along with an authentication response. This extension provides a framework for syncing user attributes and permissions via that attribute response.
 
-### Installation
+## Installation
 
-Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
+Installation the extension:
 
 ```sh
 composer require askvortsov/flarum-auth-sync
 ```
 
-### Updating
+Update the extension:
 
 ```sh
 composer update askvortsov/flarum-auth-sync
 ```
 
-### How to Use
+## How to Use
 
 For flarum administrators, if you're using an authentication extension that uses flarum auth sync, you can use the settings popup on the Flarum Admin extensions page to choose which types of attributes you'd like to sync. Please note that in order to sync Bios and Masquerade Profile Fields, you need to install and enable the [Friends of Flarum User Bios](https://github.com/FriendsOfFlarum/user-bio) and [Friends of Flarum Masquerade](https://github.com/FriendsOfFlarum/masquerade) extensions.
 
@@ -34,11 +32,9 @@ To use this extension in another authentication extension:
 - Import the AuthEventSync model via `use Askvortsov\FlarumAuthSync\Models\AuthSyncEvent;`
 - Before logging in/registering the user, create an AuthSyncEvent. Ex:
 
-```
+```php
 use Askvortsov\FlarumAuthSync\Models\AuthSyncEvent;
-use use Carbon\Carbon;
-
-...
+use Carbon\Carbon;
 
 if ($this->extensions->isEnabled('askvortsov-auth-sync') && $this->settings->get('askvortsov-saml.sync_attributes', '')) {
     $event = new AuthSyncEvent();
@@ -74,14 +70,3 @@ This was originally developed for [Flarum SAML2 SSO](https://github.com/askvorts
 - Add an expiry setting for Auth Sync Events.
 - Add support for getting users via LoginProvider providers and identifiers, in addition to email.
 - Due to a bug in flarum core, the `LoggedIn` event isn't dispatched when logging in via an external identity provider. Until this is fixed, the UserUpdatedListener listens to `Serialize` events (except those going to masquerade). This workaround will be promptly removed when the upstream bug is fixed.
-
-### Feedback
-
-Super excited to be posting my first extensions, hopefully more to follow! If you run into issues or have feature requests, let me know and I'll look into it!
-
-### Links
-
-- [Github](https://github.com/askvortsov1/flarum-auth-sync)
-- [Flagrow](https://flagrow.io/extensions/askvortsov/flarum-auth-sync)
-- [Packagist](https://packagist.org/packages/askvortsov/flarum-auth-sync)
-- [Discuss](https://discuss.flarum.org/d/22759-flarum-auth-sync)
