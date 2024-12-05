@@ -12,14 +12,14 @@
 namespace Liplum\SyncProfile;
 
 use Flarum\Extend;
-use Illuminate\Contracts\Events\Dispatcher;
+use Liplum\SyncProfile\Listener\UserUpdatedListener;
 
 return [
     (new Extend\Frontend('admin'))
-        ->js(__DIR__.'/js/dist/admin.js'),
+        ->js(__DIR__ . '/js/dist/admin.js'),
 
     (new Extend\Frontend('forum'))
-        ->js(__DIR__.'/js/dist/forum.js'),
+        ->js(__DIR__ . '/js/dist/forum.js'),
 
     (new Extend\Settings())
         ->serializeToForum('stopAvatarChange', 'liplum-sync-profile.stop_avatar_change', function ($var) {
@@ -29,9 +29,8 @@ return [
             return (bool) $var;
         }),
 
-    function (Dispatcher $events) {
-        $events->subscribe(Listener\UserUpdatedListener::class);
-    },
+    (new Extend\Event)
+        ->subscribe(UserUpdatedListener::class),
 
-    new Extend\Locales(__DIR__.'/resources/locale'),
+    new Extend\Locales(__DIR__ . '/resources/locale'),
 ];

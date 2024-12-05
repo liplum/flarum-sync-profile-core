@@ -3,7 +3,6 @@
 namespace Liplum\SyncProfile\Listener;
 
 use Liplum\SyncProfile\Models\AuthSyncEvent;
-use Flarum\Api\Event\Serializing;
 use Flarum\Extension\ExtensionManager;
 use Flarum\Group\Group;
 use Flarum\Settings\SettingsRepositoryInterface;
@@ -19,6 +18,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Intervention\Image\ImageManager;
 use Laminas\Diactoros\ServerRequest;
 use Flarum\Foundation\Config;
+use Flarum\User\Event\Saving;
 use Psr\Log\LoggerInterface;
 
 class UserUpdatedListener
@@ -42,7 +42,6 @@ class UserUpdatedListener
   {
     $events->listen(Registered::class, [$this, 'syncRegistered']);
     $events->listen(LoggedIn::class, [$this, 'syncLoggedIn']);
-    $events->listen(Serializing::class, [$this, 'syncWorkaround']);
   }
 
   public function syncRegistered(Registered $event)
@@ -53,16 +52,6 @@ class UserUpdatedListener
   public function syncLoggedIn(LoggedIn $event)
   {
     return $this->sync($event->user);
-  }
-
-  public function syncWorkaround(Serializing $event)
-  {
-    if (is_array($event->model) && !isset($event->model['on_bio']) && !isset($event->model['validation'])) {
-      $user = $event->actor;
-      if ($user != null) {
-        return $this->sync($user);
-      }
-    }
   }
 
   public function sync(User $user)
