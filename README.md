@@ -36,7 +36,7 @@ To use this extension in another authentication extension:
 use Liplum\SyncProfile\Models\AuthSyncEvent;
 use Carbon\Carbon;
 
-if ($this->extensions->isEnabled('liplum-sync-profile') && $this->settings->get('liplum-saml.sync_attributes', '')) {
+if ($this->extensions->isEnabled('liplum-sync-profile')) {
     $event = new AuthSyncEvent();
     $event->email="example.user@example.com";
     $event->attributes = json_encode([
@@ -46,9 +46,9 @@ if ($this->extensions->isEnabled('liplum-sync-profile') && $this->settings->get(
         "masquerade_attributes" => [
             "First Name" => "Example",
             "Last Name" => "User",
-            "Website" => "https://example.com
-        ]
-    ]);
+            "Website" => "https://example.com",
+        ],
+    ]);    
     $event->time = Carbon::now();
     $event->save();
 }
