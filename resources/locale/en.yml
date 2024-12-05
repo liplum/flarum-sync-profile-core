@@ -1,4 +1,4 @@
-liplum-sync-profile:
+liplum-sync-profile-core:
   admin:
     title: Sync Profile Configuration
     labels:

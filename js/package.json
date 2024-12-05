@@ -1,5 +1,5 @@
 {
-  "name": "@liplum/flarum-sync-profile",
+  "name": "@liplum/flarum-sync-profile-core",
   "private": true,
   "version": "0.1",
   "devDependencies": {

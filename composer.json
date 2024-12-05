@@ -1,6 +1,6 @@
 {
-  "name": "liplum/flarum-sync-profile",
-  "description": "Manage Sync from External Identity Providers",
+  "name": "liplum/flarum-sync-profile-core",
+  "description": "The core module of user profile synchronization with external authentication providers.",
   "version": "0.1",
   "keywords": [
     "flarum",
@@ -31,7 +31,7 @@
   },
   "extra": {
     "flarum-extension": {
-      "title": "Sync Profile",
+      "title": "Sync Profile Core",
       "category": "feature",
       "icon": {
         "name": "fas fa-sync",

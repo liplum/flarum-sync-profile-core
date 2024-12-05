@@ -2,7 +2,7 @@ import UserCard from 'flarum/forum/components/UserCard'
 import app from 'flarum/forum/app'
 import { extend, override } from 'flarum/common/extend'
 
-app.initializers.add('liplum/sync-profile', () => {
+app.initializers.add('liplum/sync-profile-core', () => {
   override(UserCard.prototype, 'view', function (original) {
     if (app.forum.attribute('stopAvatarChange')) {
       this.attrs.editable = false
