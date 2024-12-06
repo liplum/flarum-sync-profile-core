@@ -33,17 +33,17 @@ To use this extension in another authentication extension:
 
 1. Install the extension as dev dependency: `composer require liplum/sync-profile-core`.3
 2. Inject `ExtensionManager $extensions` in your constructor.
-3. Import the AuthEventSync model via `use Liplum\SyncProfile\Models\AuthSyncEvent;`
+3. Import the AuthEventSync model via `use Liplum\SyncProfile\Models\SyncProfileEventModel;`
 4. Before logging in/registering the user, create an AuthSyncEvent. Ex:
 
 ```php
-use Liplum\SyncProfile\Models\AuthSyncEvent;
+use Liplum\SyncProfile\Models\SyncProfileEventModel;
 use Carbon\Carbon;
 
 // ExtensionManager $extensions
 
 if ($this->extensions->isEnabled('liplum-sync-profile-core')) {
-    $event = new AuthSyncEvent();
+    $event = new SyncProfileEventModel();
     $event->email="example.user@example.com";
     $event->attributes = json_encode([
         "avatar" => "https://example.com/avatar.jpg",

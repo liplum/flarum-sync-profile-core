@@ -12,7 +12,7 @@
 namespace Liplum\SyncProfile;
 
 use Flarum\Extend;
-use Liplum\SyncProfile\Listener\UserUpdatedListener;
+use Liplum\SyncProfile\Listener\SyncProfileEventListener;
 
 return [
     (new Extend\Frontend('admin'))
@@ -30,7 +30,7 @@ return [
         }),
 
     (new Extend\Event)
-        ->subscribe(UserUpdatedListener::class),
+        ->subscribe(SyncProfileEventListener::class),
 
     new Extend\Locales(__DIR__ . '/resources/locale'),
 ];

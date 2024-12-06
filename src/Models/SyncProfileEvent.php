@@ -10,7 +10,7 @@ use Flarum\Database\AbstractModel;
  * @property Carbon time
  * @property string attributes
  */
-class AuthSyncEvent extends AbstractModel
+class SyncProfileEventModel extends AbstractModel
 {
     protected $table = 'liplum_sync_profile_events';
     protected $dates = ['time'];
