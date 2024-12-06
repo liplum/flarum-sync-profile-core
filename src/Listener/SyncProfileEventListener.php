@@ -52,6 +52,7 @@ class SyncProfileEventListener
     if (!$user) return;
     $this->sync($user, $event->attributes);
     $user->save();
+    $this->debugLog("Synced $event->email");
   }
 
   public function sync(User $user, $attributes)
