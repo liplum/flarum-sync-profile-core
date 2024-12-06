@@ -20,6 +20,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Intervention\Image\ImageManager;
 use Laminas\Diactoros\ServerRequest;
 use Flarum\Foundation\Config;
+use Illuminate\Support\Facades\Schema;
 use Psr\Log\LoggerInterface;
 
 class SyncProfileEventListener
@@ -30,8 +31,13 @@ class SyncProfileEventListener
   protected $container;
   protected $config;
 
-  public function __construct(Container $container, AvatarUploader $avatarUploader, ExtensionManager $extensions, SettingsRepositoryInterface $settings, Config $config)
-  {
+  public function __construct(
+    Container $container,
+    AvatarUploader $avatarUploader,
+    ExtensionManager $extensions,
+    SettingsRepositoryInterface $settings,
+    Config $config,
+  ) {
     $this->avatarUploader = $avatarUploader;
     $this->extensions = $extensions;
     $this->settings = $settings;
@@ -51,7 +57,8 @@ class SyncProfileEventListener
     $user = $event->user;
     $events = SyncProfileEventModel::where('email', $user->email)->orderBy('time', 'asc')->get();
     foreach ($events as $event) {
-      $this->sync($event->user, $event->attributes);
+      $attributes = json_decode($event->attributes, true);
+      $this->sync($event->user, $attributes);
       $event->delete();
     }
     $user->save();
@@ -68,7 +75,6 @@ class SyncProfileEventListener
   public function sync(User $user, $attributes)
   {
     $email = $user->email;
-    $attributes = json_decode($attributes, true);
     // If nickname present and nickname sync enabled
     $nickname = $attributes["nickname"];
     if (
@@ -77,9 +83,13 @@ class SyncProfileEventListener
       && $nickname != $user->$nickname
     ) {
       if (!$this->extensions->isEnabled('flarum/nicknames')) {
-        $this->debugLog("Extension 'flarum/nicknames' is not enabled.");
+        $this->debugLog("Warn: Extension 'flarum/nicknames' is not enabled.");
       }
-      $user->nickname = $nickname;
+      if (!Schema::hasColumn($user->getTable(), "nickname")) {
+        $this->debugLog("Sync nickname failed, because 'nickname' not exists on User.");
+      } else {
+        $user->nickname = $nickname;
+      }
     }
 
     // If bio present and bio sync enabled
@@ -91,9 +101,13 @@ class SyncProfileEventListener
       && $bio != $user->bio
     ) {
       if (!$this->extensions->isEnabled('fof-user-bio')) {
-        $this->debugLog("Extension 'fof/user-bio' is not enabled.");
+        $this->debugLog("Warn: Extension 'fof/user-bio' is not enabled.");
       }
-      $user->bio = $bio;
+      if (!Schema::hasColumn($user->getTable(), "bio")) {
+        $this->debugLog("Sync nickname failed, because 'nickname' not exists on User.");
+      } else {
+        $user->bio = $bio;
+      }
     }
 
     // If avatar present and avatar sync enabled
@@ -169,7 +183,7 @@ class SyncProfileEventListener
   {
     if ($this->config->inDebugMode()) {
       /**
-       * @var $logger LoggerInterface
+       * @var LoggerInterface
        */
       $logger = resolve(LoggerInterface::class);
       $logger->info($message);
