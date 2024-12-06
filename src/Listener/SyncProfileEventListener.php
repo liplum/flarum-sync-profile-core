@@ -77,6 +77,7 @@ class SyncProfileEventListener
     $email = $user->email;
     // If nickname present and nickname sync enabled
     $nickname = $attributes["nickname"];
+    $nickname = is_string($nickname) ? $nickname : null;
     if (
       isset($nickname)
       && $this->settings->get('liplum-sync-profile-core.sync-nickname', false)
@@ -91,7 +92,7 @@ class SyncProfileEventListener
 
     // If bio present and bio sync enabled
     $bio = $attributes["bio"];
-    $bio = $bio ? is_string($bio) : null;
+    $bio = is_string($bio) ? $bio : null;
     if (
       $this->settings->get('liplum-sync-profile-core.sync-bio', false)
       && isset($bio)
@@ -106,6 +107,7 @@ class SyncProfileEventListener
 
     // If avatar present and avatar sync enabled
     $avatar = $attributes['avatar'];
+    $avatar = is_string($avatar) ? $avatar : null;
     if (
       $this->settings->get('liplum-sync-profile-core.sync-avatar', false)
       && isset($avatar)
@@ -116,6 +118,7 @@ class SyncProfileEventListener
 
     // If groups present and groups sync enabled
     $groups = $attributes['groups'];
+    $groups = $groups ? (is_array($groups) ? $groups : null) : null;
     if (
       isset($groups)
       && $this->settings->get('liplum-sync-profile-core.sync-groups', false)
