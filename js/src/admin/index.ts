@@ -14,8 +14,8 @@ app.initializers.add('liplum/sync-profile-core', () => {
       type: 'boolean'
     })
     .registerSetting({
-      setting: 'liplum-sync-profile-core.stop-avatar-change',
-      label: app.translator.trans('liplum-sync-profile-core.admin.stop-avatar-change.label'),
+      setting: 'liplum-sync-profile-core.block-avatar-change',
+      label: app.translator.trans('liplum-sync-profile-core.admin.block-avatar-change.label'),
       type: 'boolean'
     })
     .registerSetting({
@@ -29,8 +29,8 @@ app.initializers.add('liplum/sync-profile-core', () => {
       type: 'boolean'
     })
     .registerSetting({
-      setting: 'liplum-sync-profile-core.stop-bio-change',
-      label: app.translator.trans('liplum-sync-profile-core.admin.stop-bio-change.label'),
+      setting: 'liplum-sync-profile-core.block-bio-change',
+      label: app.translator.trans('liplum-sync-profile-core.admin.block-bio-change.label'),
       type: 'boolean'
     })
     .registerSetting({
