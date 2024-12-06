@@ -8,12 +8,9 @@ class SyncProfileEvent
 
   public $attributes;
 
-  public $time;
-
-  public function __construct(string $email, $attributes, $time)
+  public function __construct(string $email, $attributes)
   {
     $this->email = $email;
     $this->attributes = $attributes;
-    $this->time = $time;
   }
 }
