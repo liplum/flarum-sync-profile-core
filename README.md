@@ -9,18 +9,18 @@ A [Flarum](http://flarum.org) extension to sync user profile(attributes) when au
 
 Some authentication protocols, such as SAML2, LDAP, OpenID Connect, etc have the ability to send attributes along with an authentication response. This extension provides a framework for syncing user attributes and permissions via that attribute response.
 
-## Installation
+## Get Started
 
 Installation the extension:
 
 ```sh
-composer require liplum/flarum-sync-profile
+composer require liplum/flarum-sync-profile-core
 ```
 
 Update the extension:
 
 ```sh
-composer update liplum/flarum-sync-profile
+composer update liplum/flarum-sync-profile-core
 ```
 
 ## How to Use
@@ -36,7 +36,7 @@ To use this extension in another authentication extension:
 use Liplum\SyncProfile\Models\AuthSyncEvent;
 use Carbon\Carbon;
 
-if ($this->extensions->isEnabled('liplum-sync-profile')) {
+if ($this->extensions->isEnabled('liplum-sync-profile-core')) {
     $event = new AuthSyncEvent();
     $event->email="example.user@example.com";
     $event->attributes = json_encode([
