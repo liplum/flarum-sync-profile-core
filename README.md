@@ -1,6 +1,6 @@
 # Flarum Sync Profile Core
 
-A [Flarum](http://flarum.org) extension to sync user attributes when authenticated by an external identity provider. This extension provides support for syncing:
+A [Flarum](http://flarum.org) extension to sync user profile(attributes) when authenticated by an external identity provider. This extension provides support for syncing:
 
 - Avatar
 - Groups
