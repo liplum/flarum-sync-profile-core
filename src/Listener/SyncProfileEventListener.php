@@ -2,7 +2,6 @@
 
 namespace Liplum\SyncProfile\Listener;
 
-use Liplum\SyncProfile\Models\SyncProfileEventModel;
 use Liplum\SyncProfile\Event\SyncProfileEvent;
 
 use Flarum\Extension\ExtensionManager;
@@ -10,8 +9,6 @@ use Flarum\Group\Group;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\AvatarUploader;
 use Flarum\User\Event\GroupsChanged;
-use Flarum\User\Event\LoggedIn;
-use Flarum\User\Event\Registered;
 use Flarum\User\User;
 use FoF\Masquerade\Api\Controllers\UserConfigureController;
 use FoF\Masquerade\Field;
@@ -20,7 +17,6 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Intervention\Image\ImageManager;
 use Laminas\Diactoros\ServerRequest;
 use Flarum\Foundation\Config;
-use Illuminate\Support\Facades\Schema;
 use Psr\Log\LoggerInterface;
 
 class SyncProfileEventListener
@@ -47,21 +43,7 @@ class SyncProfileEventListener
 
   public function subscribe(Dispatcher $events)
   {
-    $events->listen(Registered::class, [$this, 'syncModel']);
-    $events->listen(LoggedIn::class, [$this, 'syncModel']);
     $events->listen(SyncProfileEvent::class, [$this, 'syncEvent']);
-  }
-
-  public function syncModel($event)
-  {
-    $user = $event->user;
-    $events = SyncProfileEventModel::where('email', $user->email)->orderBy('time', 'asc')->get();
-    foreach ($events as $event) {
-      $attributes = json_decode($event->attributes, true);
-      $this->sync($event->user, $attributes);
-      $event->delete();
-    }
-    $user->save();
   }
 
   public function syncEvent(SyncProfileEvent $event)
@@ -106,13 +88,13 @@ class SyncProfileEventListener
     }
 
     // If avatar present and avatar sync enabled
-    $avatar = $attributes['avatar'];
-    $avatar = is_string($avatar) ? $avatar : null;
+    $avatarUrl = $attributes['avatarUrl'];
+    $avatarUrl = is_string($avatarUrl) ? $avatarUrl : null;
     if (
       $this->settings->get('liplum-sync-profile-core.sync-avatar', false)
-      && isset($avatar)
+      && isset($avatarUrl)
     ) {
-      $image = (new ImageManager())->make($avatar);
+      $image = (new ImageManager())->make($avatarUrl);
       $this->avatarUploader->upload($user, $image);
     }
 
