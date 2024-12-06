@@ -82,8 +82,8 @@ class SyncProfileEventListener
       && $this->settings->get('liplum-sync-profile-core.sync-nickname', false)
       && $nickname != $user->$nickname
     ) {
-      if (!$this->extensions->isEnabled('flarum/nicknames')) {
-        $this->debugLog("Sync user profile: 'nickname' failed, because extension 'flarum/nicknames' is not enabled.");
+      if (!$this->extensions->isEnabled('flarum-nicknames')) {
+        $this->debugLog("Sync user profile: 'nickname' failed, because extension 'flarum-nicknames' is not enabled.");
       } else {
         $user->nickname = $nickname;
       }
