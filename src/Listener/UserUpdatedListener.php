@@ -65,6 +65,7 @@ class UserUpdatedListener
       if (
         isset($nickname)
         && $this->settings->get('liplum-sync-profile-core.sync-nickname', false)
+        && $nickname != $user->$nickname
       ) {
         if (!$this->extensions->isEnabled('flarum/nicknames')) {
           $this->debugLog("Extension 'flarum/nicknames' is not enabled.");

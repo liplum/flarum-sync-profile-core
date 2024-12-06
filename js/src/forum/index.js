@@ -4,7 +4,7 @@ import { extend, override } from 'flarum/common/extend'
 
 app.initializers.add('liplum/sync-profile-core', () => {
   override(UserCard.prototype, 'view', function (original) {
-    if (app.forum.attribute('stopAvatarChange')) {
+    if (app.forum.attribute('blockAvatarChange')) {
       this.attrs.editable = false
     }
 
@@ -13,7 +13,7 @@ app.initializers.add('liplum/sync-profile-core', () => {
 
 
   extend(UserCard.prototype, 'oncreate', function () {
-    if (app.forum.attribute('stopBioChange') && $('.UserBio').hasClass('editable')) {
+    if (app.forum.attribute('blockBioChange') && $('.UserBio').hasClass('editable')) {
       if ($('.UserBio-content').find('.UserBio-placeholder').length !== 0) {
         var styleTag = $('<style>.item-bio { display: none !important; }</style>')
         $('html > head').append(styleTag)
