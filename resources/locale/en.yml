@@ -7,7 +7,7 @@ liplum-sync-profile-core:
       help: >
         Block users from changing their profile on Flarum.
         Working properly with extensions like "FoF User Bio".
-        Not working with extensions which not respect "editable" attribute on user,
+        Not working with extensions which not respect "editable" attributes on user,
         like "Profile Cover", "User Badges".
     sync-avatar:
       label: Sync Avatar
