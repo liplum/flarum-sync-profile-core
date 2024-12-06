@@ -22,10 +22,7 @@ return [
         ->js(__DIR__ . '/js/dist/forum.js'),
 
     (new Extend\Settings())
-        ->serializeToForum('blockAvatarChange', 'liplum-sync-profile-core.block-avatar-change', function ($var) {
-            return (bool) $var;
-        })
-        ->serializeToForum('blockBioChange', 'liplum-sync-profile-core.block-bio-change', function ($var) {
+        ->serializeToForum('liplum-sync-profile-core.block-profile-changes', 'liplum-sync-profile-core.block-profile-changes', function ($var) {
             return (bool) $var;
         }),
 
