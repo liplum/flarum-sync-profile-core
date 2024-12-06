@@ -3,10 +3,11 @@ liplum-sync-profile-core:
     sync-nickname:
       label: Sync Nickname
     block-avatar-change:
-      label: Block users from changing their bio on Flarum
+      label: Block Avatar Changes
+      help: Block users from changing their avatar on Flarum.
     block-bio-change:
-      label: Block users from changing their bio on Flarum
-      help: Requires Friends of Flarum User Bio extension
+      label: Block Bio Changes
+      help: Block users from changing their bio on Flarum. Requires Friends of Flarum User Bio extension
     sync-avatar:
       label: Sync Avatar
     sync-groups:
