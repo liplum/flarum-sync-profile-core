@@ -57,17 +57,53 @@ class UserUpdatedListener
   public function sync(User $user)
   {
     $events = AuthSyncEvent::where('email', $user->email)->orderBy('time', 'asc')->get();
+    $email = $user->email;
     foreach ($events as $event) {
       $attributes = json_decode($event->attributes, true);
-      // If Avatar present and avatar sync enabled
-      if (isset($attributes['avatar']) && $this->settings->get('liplum-sync-profile-core.sync_avatar', false) && !fnmatch($this->settings->get('liplum-sync-profile-core.ignored_avatar', ''), $attributes['avatar'])) {
-        $image = (new ImageManager())->make($attributes['avatar']);
+      // If nickname present and nickname sync enabled
+      $nickname = $attributes["nickname"];
+      if (
+        isset($nickname)
+        && $this->settings->get('liplum-sync-profile-core.sync-nickname', false)
+      ) {
+        if (!$this->extensions->isEnabled('flarum/nicknames')) {
+          $this->debugLog("Extension 'flarum/nicknames' is not enabled.");
+        }
+        $user->nickname = $nickname;
+      }
+
+      // If bio present and bio sync enabled
+      $bio = $attributes["bio"];
+      $bio = $bio ? is_string($bio) : null;
+      if (
+        $this->settings->get('liplum-sync-profile-core.sync-bio', false)
+        && isset($bio)
+        && $bio != $user->bio
+      ) {
+        if (!$this->extensions->isEnabled('fof-user-bio')) {
+          $this->debugLog("Extension 'fof/user-bio' is not enabled.");
+        }
+        $user->bio = $bio;
+      }
+
+      // If avatar present and avatar sync enabled
+      $avatar = $attributes['avatar'];
+      if (
+        $this->settings->get('liplum-sync-profile-core.sync-avatar', false)
+        && isset($avatar)
+      ) {
+        $image = (new ImageManager())->make($avatar);
         $this->avatarUploader->upload($user, $image);
       }
-      // If group present and group sync enabled
-      if (isset($attributes['groups']) && $this->settings->get('liplum-sync-profile-core.sync_groups', false)) {
+
+      // If groups present and groups sync enabled
+      $groups = $attributes['groups'];
+      if (
+        isset($groups)
+        && $this->settings->get('liplum-sync-profile-core.sync-groups', false)
+      ) {
         $newGroupIds = [];
-        foreach ($attributes['groups'] as $group) {
+        foreach ($groups as $group) {
           if (filter_var($group, FILTER_VALIDATE_INT) && Group::where('id', intval($group))->exists()) {
             $newGroupIds[] = intval($group);
           }
@@ -81,15 +117,17 @@ class UserUpdatedListener
           $user->groups()->sync($newGroupIds);
         });
       }
-      // If bio present and bio sync enabled
-      if (isset($attributes['bio']) && $this->settings->get('liplum-sync-profile-core.sync_bio', false)) {
-        if ($this->extensions->isEnabled('fof-user-bio') && is_string($attributes['bio'])) {
-          $user->bio = $attributes['bio'];
-        }
-      }
-      // If masquerade present and masquerade sync enabled
-      if (isset($attributes['masquerade_attributes']) && $this->settings->get('liplum-sync-profile-core.sync_masquerade', false)) {
-        if ($this->extensions->isEnabled('fof-masquerade') && is_array($attributes['masquerade_attributes'])) {
+
+      // If fof-masquerade present and masquerade sync enabled
+      $fofMasquerade = $attributes['fof/masquerade'];
+      $fofMasquerade = is_array($fofMasquerade) ? $fofMasquerade : null;
+      if (
+        isset($fofMasquerade)
+        && $this->settings->get('liplum-sync-profile-core.sync-masquerade', false)
+      ) {
+        if (!$this->extensions->isEnabled('fof-masquerade')) {
+          $this->debugLog("Profile sync of of-masquerade failed, because extension 'fof/masquerade' is not enabled.");
+        } else {
           $controller = UserConfigureController::class;
           if (is_string($controller)) {
             $controller = $this->container->make($controller);
@@ -115,6 +153,7 @@ class UserUpdatedListener
           }
         }
       }
+
       $user->save();
       $event->delete();
     }

@@ -25,7 +25,9 @@ composer update liplum/flarum-sync-profile-core
 
 ## How to Use
 
-For flarum administrators, if you're using an authentication extension that uses this extension, you can use the settings popup on the Flarum Admin extensions page to choose which types of attributes you'd like to sync. Please note that in order to sync Bios and Masquerade Profile Fields, you need to install and enable the [Friends of Flarum User Bios](https://github.com/FriendsOfFlarum/user-bio) and [Friends of Flarum Masquerade](https://github.com/FriendsOfFlarum/masquerade) extensions.
+For flarum administrators, if you're using an authentication extension that uses this extension, you can use the settings popup on the Flarum Admin extensions page to choose which types of attributes you'd like to sync.
+
+Please note that in order to sync Bios and Masquerade Profile Fields, you need to install and enable the [Friends of Flarum User Bios](https://github.com/FriendsOfFlarum/user-bio) and [Friends of Flarum Masquerade](https://github.com/FriendsOfFlarum/masquerade) extensions.
 
 To use this extension in another authentication extension:
 
@@ -41,12 +43,12 @@ if ($this->extensions->isEnabled('liplum-sync-profile-core')) {
     $event->email="example.user@example.com";
     $event->attributes = json_encode([
         "avatar" => "https://example.com/avatar.jpg",
+        "nickname" => "Test User",
         "bio" => "Hello, this is my bio",
         "groups" => [1, 15, 2],
-        "masquerade_attributes" => [
-            "First Name" => "Example",
-            "Last Name" => "User",
-            "Website" => "https://example.com",
+        "fof/masquerade" => [
+            "fieldA" => "Example A",
+            "fieldB" => "Example B",
         ],
     ]);    
     $event->time = Carbon::now();

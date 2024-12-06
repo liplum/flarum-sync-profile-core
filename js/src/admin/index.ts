@@ -4,38 +4,38 @@ app.initializers.add('liplum/sync-profile-core', () => {
   app.extensionData
     .for('liplum-sync-profile-core')
     .registerSetting({
-      setting: 'liplum-sync-profile-core.sync_avatar',
-      label: app.translator.trans('liplum-sync-profile-core.admin.labels.sync_avatar'),
+      setting: 'liplum-sync-profile-core.sync-nickname',
+      label: app.translator.trans('liplum-sync-profile-core.admin.sync-nickname.label'),
       type: 'boolean'
     })
     .registerSetting({
-      setting: 'liplum-sync-profile-core.ignored_avatar',
-      label: app.translator.trans('liplum-sync-profile-core.admin.labels.ignored_avatar'),
-      type: 'text'
-    })
-    .registerSetting({
-      setting: 'liplum-sync-profile-core.stop_avatar_change',
-      label: app.translator.trans('liplum-sync-profile-core.admin.labels.stop_avatar_change'),
+      setting: 'liplum-sync-profile-core.sync-avatar',
+      label: app.translator.trans('liplum-sync-profile-core.admin.sync-avatar.label'),
       type: 'boolean'
     })
     .registerSetting({
-      setting: 'liplum-sync-profile-core.sync_groups',
-      label: app.translator.trans('liplum-sync-profile-core.admin.labels.sync_groups'),
+      setting: 'liplum-sync-profile-core.stop-avatar-change',
+      label: app.translator.trans('liplum-sync-profile-core.admin.stop-avatar-change.label'),
       type: 'boolean'
     })
     .registerSetting({
-      setting: 'liplum-sync-profile-core.sync_bio',
-      label: app.translator.trans('liplum-sync-profile-core.admin.labels.sync_bio'),
+      setting: 'liplum-sync-profile-core.sync-groups',
+      label: app.translator.trans('liplum-sync-profile-core.admin.sync-groups.label'),
       type: 'boolean'
     })
     .registerSetting({
-      setting: 'liplum-sync-profile-core.stop_bio_change',
-      label: app.translator.trans('liplum-sync-profile-core.admin.labels.stop_bio_change'),
+      setting: 'liplum-sync-profile-core.sync-bio',
+      label: app.translator.trans('liplum-sync-profile-core.admin.sync-bio.label'),
       type: 'boolean'
     })
     .registerSetting({
-      setting: 'liplum-sync-profile-core.sync_masquerade',
-      label: app.translator.trans('liplum-sync-profile-core.admin.labels.sync_masquerade'),
+      setting: 'liplum-sync-profile-core.stop-bio-change',
+      label: app.translator.trans('liplum-sync-profile-core.admin.stop-bio-change.label'),
+      type: 'boolean'
+    })
+    .registerSetting({
+      setting: 'liplum-sync-profile-core.sync-fof-masquerade',
+      label: app.translator.trans('liplum-sync-profile-core.admin.sync-fof-masquerade.label'),
       type: 'boolean'
     })
 });
