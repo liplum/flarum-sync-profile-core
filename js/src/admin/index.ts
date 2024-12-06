@@ -16,7 +16,6 @@ app.initializers.add('liplum/sync-profile-core', () => {
     .registerSetting({
       setting: 'liplum-sync-profile-core.block-avatar-change',
       label: app.translator.trans('liplum-sync-profile-core.admin.block-avatar-change.label'),
-      help: app.translator.trans('liplum-sync-profile-core.admin.block-avatar-change.help'),
       type: 'boolean'
     })
     .registerSetting({

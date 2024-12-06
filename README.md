@@ -31,12 +31,16 @@ Please note that in order to sync Bios and Masquerade Profile Fields, you need t
 
 To use this extension in another authentication extension:
 
-- Import the AuthEventSync model via `use Liplum\SyncProfile\Models\AuthSyncEvent;`
-- Before logging in/registering the user, create an AuthSyncEvent. Ex:
+1. Install the extension as dev dependency: `composer require liplum/sync-profile-core`.3
+2. Inject `ExtensionManager $extensions` in your constructor.
+3. Import the AuthEventSync model via `use Liplum\SyncProfile\Models\AuthSyncEvent;`
+4. Before logging in/registering the user, create an AuthSyncEvent. Ex:
 
 ```php
 use Liplum\SyncProfile\Models\AuthSyncEvent;
 use Carbon\Carbon;
+
+// ExtensionManager $extensions
 
 if ($this->extensions->isEnabled('liplum-sync-profile-core')) {
     $event = new AuthSyncEvent();
@@ -61,7 +65,7 @@ if ($this->extensions->isEnabled('liplum-sync-profile-core')) {
   - `avatar`: A URL pointing to an image for the user's avatar. Make sure that the file type is compatible with Flarum (jpeg or png I believe).
   - `groups`: A comma-separated list of ids for groups that a user should belong to. Keep in mind that this will both add and remove groups, so make sure that all desired groups are included.
   - `bio`: A string that will be synced to the user's bio if [Friends of Flarum User Bios](https://github.com/FriendsOfFlarum/user-bio) is enabled
-  - `masquerade_attributes`: An associative array for any masquerade keys and attributes you want to sync. Make sure that the key matches the name of the profile field exactly.
+  - `fof-masquerade`: An associative array for any masquerade keys and attributes you want to sync. Make sure that the key matches the name of the profile field exactly.
 
 ### TODO
 
