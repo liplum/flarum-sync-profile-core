@@ -83,10 +83,7 @@ class SyncProfileEventListener
       && $nickname != $user->$nickname
     ) {
       if (!$this->extensions->isEnabled('flarum/nicknames')) {
-        $this->debugLog("Warn: Extension 'flarum/nicknames' is not enabled.");
-      }
-      if (!Schema::hasColumn($user->getTable(), "nickname")) {
-        $this->debugLog("Sync nickname failed, because 'nickname' not exists on User.");
+        $this->debugLog("Sync user profile: 'nickname' failed, because extension 'flarum/nicknames' is not enabled.");
       } else {
         $user->nickname = $nickname;
       }
@@ -101,10 +98,7 @@ class SyncProfileEventListener
       && $bio != $user->bio
     ) {
       if (!$this->extensions->isEnabled('fof-user-bio')) {
-        $this->debugLog("Warn: Extension 'fof/user-bio' is not enabled.");
-      }
-      if (!Schema::hasColumn($user->getTable(), "bio")) {
-        $this->debugLog("Sync nickname failed, because 'nickname' not exists on User.");
+        $this->debugLog("Sync user profile: 'nickname' failed, because extension 'fof/user-bio' is not enabled.");
       } else {
         $user->bio = $bio;
       }
