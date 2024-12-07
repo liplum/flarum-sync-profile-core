@@ -1,7 +1,7 @@
 {
   "name": "liplum/flarum-sync-profile-core",
   "description": "The core module of user profile synchronization when authenticated by an external identity provider.",
-  "version": "0.1",
+  "version": "0.1.1",
   "keywords": [
     "flarum",
     "flarum-extension",

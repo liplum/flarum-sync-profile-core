@@ -21,11 +21,12 @@ use Psr\Log\LoggerInterface;
 
 class SyncProfileEventListener
 {
-  protected $avatarUploader;
-  protected $extensions;
-  protected $settings;
-  protected $container;
-  protected $config;
+  private $avatarUploader;
+  private $extensions;
+  private $settings;
+  private $container;
+  private $config;
+  private $log;
 
   public function __construct(
     Container $container,
@@ -33,12 +34,14 @@ class SyncProfileEventListener
     ExtensionManager $extensions,
     SettingsRepositoryInterface $settings,
     Config $config,
+    LoggerInterface $log,
   ) {
     $this->avatarUploader = $avatarUploader;
     $this->extensions = $extensions;
     $this->settings = $settings;
     $this->container = $container;
     $this->config = $config;
+    $this->log = $log;
   }
 
   public function subscribe(Dispatcher $events)
@@ -51,12 +54,12 @@ class SyncProfileEventListener
     $email = $event->email;
     $user = User::query()->where("email", $email)->first();
     if (!$user) {
-      $this->debugLog("Failed sync profile, due to $email not found");
+      $this->log->debug("Failed sync profile, due to $email not found");
       return;
     }
     $this->sync($user, $event->attributes);
     $user->save();
-    $this->debugLog("Synced $event->email");
+    $this->log->debug("Synced $event->email");
   }
 
   public function sync(User $user, $attributes)
@@ -71,7 +74,7 @@ class SyncProfileEventListener
       && $nickname != $user->$nickname
     ) {
       if (!$this->extensions->isEnabled('flarum-nicknames')) {
-        $this->debugLog("Sync user profile: 'nickname' failed, because extension 'flarum-nicknames' is not enabled.");
+        $this->log->debug("Sync user profile: 'nickname' failed, because extension 'flarum-nicknames' is not enabled.");
       } else {
         $user->nickname = $nickname;
       }
@@ -86,7 +89,7 @@ class SyncProfileEventListener
       && $bio != $user->bio
     ) {
       if (!$this->extensions->isEnabled('fof-user-bio')) {
-        $this->debugLog("Sync user profile: 'nickname' failed, because extension 'fof/user-bio' is not enabled.");
+        $this->log->debug("Sync user profile: 'nickname' failed, because extension 'fof/user-bio' is not enabled.");
       } else {
         $user->bio = $bio;
       }
@@ -136,7 +139,7 @@ class SyncProfileEventListener
       && $this->settings->get('liplum-sync-profile-core.sync-masquerade', false)
     ) {
       if (!$this->extensions->isEnabled('fof-masquerade')) {
-        $this->debugLog("Profile sync of of-masquerade failed, because extension 'fof/masquerade' is not enabled.");
+        $this->log->debug("Profile sync of of-masquerade failed, because extension 'fof/masquerade' is not enabled.");
       } else {
         $controller = UserConfigureController::class;
         if (is_string($controller)) {
@@ -162,17 +165,6 @@ class SyncProfileEventListener
         } catch (\Exception $e) {
         }
       }
-    }
-  }
-
-  protected function debugLog(string $message)
-  {
-    if ($this->config->inDebugMode()) {
-      /**
-       * @var LoggerInterface
-       */
-      $logger = resolve(LoggerInterface::class);
-      $logger->info($message);
     }
   }
 }
