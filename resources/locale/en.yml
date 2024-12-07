@@ -11,6 +11,11 @@ liplum-sync-profile-core:
         like "Profile Cover", "User Badges".
     sync-avatar:
       label: Sync Avatar
+    ignore-unchanged-avatar:
+      label: Ignore Unchanged Avatar
+      help: >
+        If the avatar url is identical to the former one, the extension will not fetch it to save bandwidth.
+        Turn off this settings if the image file no longer exists.
     sync-groups:
       label: Sync Groups
     sync-bio:

@@ -20,6 +20,12 @@ app.initializers.add('liplum-sync-profile-core', () => {
       type: 'boolean'
     })
     .registerSetting({
+      setting: 'liplum-sync-profile-core.ignore-unchanged-avatar',
+      label: app.translator.trans('liplum-sync-profile-core.admin.ignore-unchanged-avatar.label'),
+      help: app.translator.trans('liplum-sync-profile-core.admin.ignore-unchanged-avatar.help'),
+      type: 'boolean'
+    })
+    .registerSetting({
       setting: 'liplum-sync-profile-core.sync-groups',
       label: app.translator.trans('liplum-sync-profile-core.admin.sync-groups.label'),
       type: 'boolean'

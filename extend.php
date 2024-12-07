@@ -15,19 +15,22 @@ use Flarum\Extend;
 use Liplum\SyncProfile\Listener\SyncProfileEventListener;
 
 return [
-    (new Extend\Frontend('admin'))
-        ->js(__DIR__ . '/js/dist/admin.js'),
+  (new Extend\Frontend('admin'))
+    ->js(__DIR__ . '/js/dist/admin.js'),
 
-    (new Extend\Frontend('forum'))
-        ->js(__DIR__ . '/js/dist/forum.js'),
+  (new Extend\Frontend('forum'))
+    ->js(__DIR__ . '/js/dist/forum.js'),
 
-    (new Extend\Settings())
-        ->serializeToForum('liplum-sync-profile-core.block-profile-changes', 'liplum-sync-profile-core.block-profile-changes', function ($var) {
-            return (bool) $var;
-        }),
+  (new Extend\Settings())
+    ->serializeToForum('liplum-sync-profile-core.block-profile-changes', 'liplum-sync-profile-core.block-profile-changes', function ($var) {
+      return (bool) $var;
+    }),
 
-    (new Extend\Event)
-        ->subscribe(SyncProfileEventListener::class),
+  (new Extend\Event)
+    ->subscribe(SyncProfileEventListener::class),
 
-    new Extend\Locales(__DIR__ . '/resources/locale'),
+  new Extend\Locales(__DIR__ . '/resources/locale'),
+
+  (new Extend\Settings())
+    ->default('liplum-sync-profile-core.ignore-unchanged-avatar', true),
 ];
