@@ -14,8 +14,8 @@ liplum-sync-profile-core:
     ignore-unchanged-avatar:
       label: Ignore Unchanged Avatar
       help: >
-        If the avatar url is identical to the former one, the extension will not fetch it to save bandwidth.
-        Turn off this settings if the image file no longer exists.
+        To save bandwidth, the extension skips downloading identical avatars, unless they are manually changed.
+        Disable this setting to ensure all avatars are up-to-date, especially if originals are missing.
     sync-groups:
       label: Sync Groups
     sync-bio:

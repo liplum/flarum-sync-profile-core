@@ -103,7 +103,7 @@ class SyncProfileEventListener
       && isset($avatarUrl)
     ) {
       $ignoreUnchangedAvatar = $this->settings->get('liplum-sync-profile-core.ignore-unchanged-avatar', true);
-      $newHash = hash("md5", $user->avatar_url . $avatarUrl);
+      $newHash = hash("md5", $user->avatar_url . '+' . $avatarUrl);
       if (
         !$ignoreUnchangedAvatar ||
         $newHash != $user->last_avatar_hash
@@ -112,7 +112,7 @@ class SyncProfileEventListener
         $this->avatarUploader->upload($user, $image);
       }
       // update new hash
-      $user->last_avatar_hash = hash("md5", $user->avatar_url . $avatarUrl);
+      $user->last_avatar_hash = hash("md5", $user->avatar_url . '+' . $avatarUrl);
     }
 
     // If groups present and groups sync enabled
