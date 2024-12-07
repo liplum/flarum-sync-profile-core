@@ -62,7 +62,7 @@ if ($this->extensions->isEnabled('liplum-sync-profile-core')) {
           "fieldA" => "Example A",
           "fieldB" => "Example B",
       ],
-  ]))
+  ]));
 }
 ```
 
