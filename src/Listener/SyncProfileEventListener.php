@@ -48,8 +48,12 @@ class SyncProfileEventListener
 
   public function syncEvent(SyncProfileEvent $event)
   {
-    $user = User::query()->where("email", $event->email)->first();
-    if (!$user) return;
+    $email = $event->email;
+    $user = User::query()->where("email", $email)->first();
+    if (!$user) {
+      $this->debugLog("Failed sync profile, due to $email not found");
+      return;
+    }
     $this->sync($user, $event->attributes);
     $user->save();
     $this->debugLog("Synced $event->email");
