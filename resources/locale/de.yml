@@ -1,0 +1,26 @@
+liplum-sync-profile-core:
+  admin:
+    sync-nickname:
+      label: Nickname synchronisieren
+    block-profile-changes:
+      label: Profiländerungen sperren
+      help: >
+        Sperre die Benutzer/innen, damit sie ihr Profil auf Flarum nicht ändern können.
+        Funktioniert einwandfrei mit Erweiterungen wie "FoF User Bio".
+        Funktioniert nicht mit Erweiterungen, die keine „bearbeitbaren“ Attribute des Benutzers berücksichtigen,
+        wie z.B. „Profilabdeckung“, „Benutzerabzeichen“.
+    sync-avatar:
+      label: Avatar synchronisieren
+    ignore-unchanged-avatar:
+      label: Unveränderten Avatar ignorieren
+      help: >
+        Um Bandbreite zu sparen, überspringt die Erweiterung das Herunterladen identischer Avatare, es sei denn, sie werden manuell geändert.
+        Deaktiviere diese Einstellung, um sicherzustellen, dass alle Avatare auf dem neuesten Stand sind, vor allem, wenn die Originale fehlen.
+    sync-groups:
+      label: Gruppen synchronisieren
+    sync-bio:
+      label: Bio synchronisieren
+      help: Erfordert die Erweiterung Friends of Flarum User Bio
+    sync-fof-masquerade:
+      label: Eigenschaften der Maskerade synchronisieren
+      help: Erfordert die Erweiterung Friends of Flarum Masquerade
