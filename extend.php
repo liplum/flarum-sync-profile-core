@@ -29,7 +29,7 @@ return [
   (new Extend\Event)
     ->subscribe(SyncProfileEventListener::class),
 
-  new Extend\Locales(__DIR__ . '/resources/locale'),
+  new Extend\Locales(__DIR__ . '/locale'),
 
   (new Extend\Settings())
     ->default('liplum-sync-profile-core.ignore-unchanged-avatar', true),
