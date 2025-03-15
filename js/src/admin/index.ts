@@ -1,5 +1,5 @@
 import app from "flarum/admin/app";
-import { extName } from "src/common";
+import { extName } from "../r";
 
 app.initializers.add(extName, () => {
   app.extensionData
