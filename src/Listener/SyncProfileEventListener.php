@@ -62,7 +62,6 @@ class SyncProfileEventListener
     $this->log->debug("Synced $event->email");
   }
 
-
   private function syncNickname(User $user, $attributes)
   {
     // If nickname present and nickname sync enabled
@@ -186,6 +185,7 @@ class SyncProfileEventListener
           $post_req = $post_req->withAttribute('bypassCsrfToken', true)->withAttribute('actor', $user);
           $controller->handle($post_req);
         } catch (\Exception $e) {
+          return;
         }
       }
     }
