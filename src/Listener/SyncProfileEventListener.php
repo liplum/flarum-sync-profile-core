@@ -62,9 +62,9 @@ class SyncProfileEventListener
     $this->log->debug("Synced $event->email");
   }
 
-  public function sync(User $user, $attributes)
+
+  private function syncNickname(User $user, $attributes)
   {
-    $email = $user->email;
     // If nickname present and nickname sync enabled
     $nickname = $attributes["nickname"];
     $nickname = is_string($nickname) ? $nickname : null;
@@ -79,7 +79,10 @@ class SyncProfileEventListener
         $user->nickname = $nickname;
       }
     }
+  }
 
+  private function syncBio(User $user, $attributes)
+  {
     // If bio present and bio sync enabled
     $bio = $attributes["bio"];
     $bio = is_string($bio) ? $bio : null;
@@ -94,7 +97,10 @@ class SyncProfileEventListener
         $user->bio = $bio;
       }
     }
+  }
 
+  private function syncAvatar(User $user, $attributes)
+  {
     // If avatar present and avatar sync enabled
     $avatarUrl = $attributes['avatarUrl'];
     $avatarUrl = is_string($avatarUrl) ? $avatarUrl : null;
@@ -108,13 +114,21 @@ class SyncProfileEventListener
         !$ignoreUnchangedAvatar ||
         $newHash != $user->last_avatar_hash
       ) {
-        $image = (new ImageManager())->make($avatarUrl);
+        try {
+          $image = (new ImageManager())->make($avatarUrl);
+        } catch (\Exception $e) {
+          $this->log->error("Sync avatar failed. $e");
+          return;
+        }
         $this->avatarUploader->upload($user, $image);
       }
       // update new hash
       $user->last_avatar_hash = hash("md5", $user->avatar_url . '+' . $avatarUrl);
     }
+  }
 
+  private function syncGroup(User $user, $attributes)
+  {
     // If groups present and groups sync enabled
     $groups = $attributes['groups'];
     $groups = $groups ? (is_array($groups) ? $groups : null) : null;
@@ -137,7 +151,9 @@ class SyncProfileEventListener
         $user->groups()->sync($newGroupIds);
       });
     }
+  }
 
+  private function syncFofMasquerade(User $user, $attributes){
     // If fof-masquerade present and masquerade sync enabled
     $fofMasquerade = $attributes['fof/masquerade'];
     $fofMasquerade = is_array($fofMasquerade) ? $fofMasquerade : null;
@@ -173,5 +189,16 @@ class SyncProfileEventListener
         }
       }
     }
+  }
+
+  public function sync(User $user, $attributes)
+  {
+    $email = $user->email;
+
+    $this->syncNickname($user, $attributes);
+    $this->syncBio($user, $attributes);
+    $this->syncAvatar($user, $attributes);
+    $this->syncGroup($user, $attributes);
+    $this->syncFofMasquerade($user, $attributes);
   }
 }
